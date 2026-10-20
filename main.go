@@ -1,5 +1,14 @@
 // Go-Web-App-Skeleton
+/*
+# Build
 
+    $ go build
+
+# Run
+
+    $ ./go-webskeleton --port 7000 &
+
+*/
 package main
 
 import (
