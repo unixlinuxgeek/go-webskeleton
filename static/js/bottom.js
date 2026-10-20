@@ -1,0 +1,1 @@
+console.log("bottom.js is loaded!")
