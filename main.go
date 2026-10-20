@@ -16,8 +16,8 @@ import (
 var port = flag.Int("port", 8080, "Set another port: --port 9000")
 var tmpl *template.Template
 
-//go:embed static/*
-//go:embed templates/*
+//go:embed static
+//go:embed templates/*.html
 var staticFS embed.FS
 
 func main() {
@@ -32,9 +32,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	fs := http.FS(staticFS)
+	fs := http.FileServer(http.FS(staticFS))
 
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(fs)))
+	http.Handle("/static/", fs)
 	http.HandleFunc("/", mainHandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(*port), nil))
 }
