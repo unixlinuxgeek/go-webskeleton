@@ -49,7 +49,13 @@ func main() {
 }
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
-	err := tmpl.Execute(w, nil)
+	data := struct {
+		Port int
+	}{
+		Port: *port,
+	}
+
+	err := tmpl.Execute(w, data)
 	if err != nil {
 		w.Write([]byte(fmt.Sprint(err)))
 		return
