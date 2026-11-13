@@ -10,7 +10,7 @@ Build:
 Run:
 
 ```bash
-    $ go-webskeleton --port 7000 &
+    $ go-webskeleton --port 5000 &
 ```
 
 ![goskeleton.png](./static/img/goskeleton2.png)
