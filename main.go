@@ -19,6 +19,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"strconv"
 )
 
@@ -49,13 +50,35 @@ func main() {
 }
 
 func mainHandler(w http.ResponseWriter, r *http.Request) {
-	data := struct {
-		Port int
-	}{
-		Port: *port,
+
+	path, err := exec.LookPath("uptime")
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		return
+	}
+	b, err := exec.Command(path, "-p").Output()
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		return
 	}
 
-	err := tmpl.Execute(w, data)
+	s, err := exec.Command(path, "-s").Output()
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	data := struct {
+		Port   int
+		Uptime string
+		Since  string
+	}{
+		Port:   *port,
+		Uptime: string(b[2:]),
+		Since:  string(s),
+	}
+
+	err = tmpl.Execute(w, data)
 	if err != nil {
 		w.Write([]byte(fmt.Sprint(err)))
 		return
