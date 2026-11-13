@@ -13,4 +13,4 @@ Run:
     $ go-webskeleton --port 7000 &
 ```
 
-![goskeleton.png](./static/img/goskeleton.png)
+![goskeleton.png](./static/img/goskeleton2.png)
